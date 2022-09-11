@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import TheGraph from './components/TheGraph.vue'
+import TheRecentMatches from './components/TheRecentMatches.vue'
 </script>
 
 <template>
-  <TheGraph/>
+  <TheRecentMatches/>
 </template>
 
 <style scoped>

@@ -1,9 +1,9 @@
 export interface IMatchResult {
     KDA: String,
-    networth: String,
+    networth: Number,
     level: Number,
-    GPM: String,
-    damage: String,
-    towerDamage: String,
+    GPM: Number,
+    damage: Number,
+    towerDamage: Number,
     IMP: Number
 }
