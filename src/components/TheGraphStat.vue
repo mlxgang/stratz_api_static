@@ -1,49 +1,51 @@
-<script lang="ts" setup>
-import { onMounted } from 'vue'
-import { Chart, registerables } from 'chart.js';
-Chart.register(...registerables);
+<script setup lang="ts">
+import VueApexCharts from 'vue3-apexcharts'
+import { onMounted, PropType } from 'vue';
+
+interface IMatchResult {
+  KDA: String,
+  networth: Number,
+  level: Number,
+  GPM: Number,
+  damage: Number,
+  towerDamage: Number,
+  IMP: Number
+}
 
 const props = defineProps({
-  lastMatches: Object
+  lastMatches: {
+    type: Array as PropType<Array<IMatchResult>>
+  }
 })
+
+const chartOptions = {
+  chart: {
+    id: 'basic-bar'
+  },
+  xaxis: {
+    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+  }
+}
+const series = [{
+  name: 'series-1',
+  data: [30, 40, 45, 50, 49, 60, 70, 91]
+}]
+// for (let i in props.lastMatches.length) {
+//   console.log(props.lastMatches[i].KDA)
+// }
+//
+// console.log(props.lastMatches)
 
 onMounted(() => {
-  const labels: String[] = []
-  const graphData: Number[] = []
-
-  const config = {
-    type: 'line',
-    labels,
-    datasets: [{
-      label: 'My First dataset',
-      backgroundColor: 'rgb(255, 99, 132)',
-      borderColor: 'rgb(255, 99, 132)',
-      graphData,
-    }]
-  };
-
-  for ( let i in props.lastMatches ) {
-    labels.push(props.lastMatches[i].KDA);
-    graphData.push(props.lastMatches[i].IMP)
-  }
-
-  const ctx = document.getElementById('chart') as HTMLCanvasElement
-  new Chart(
-      ctx,
-      config
-  );
+  console.log(props.lastMatches[0])
+  // todo: watch for props
 })
+
 </script>
 
 <template>
-  <div class="chart-container">
-    <canvas id="chart"></canvas>
-  </div>
+  <VueApexCharts width="500" type="line" :options="chartOptions" :series="series"/>
 </template>
 
 <style scoped>
-.chart-container {
-  display: flex;
-  justify-content: center;
-}
 </style>

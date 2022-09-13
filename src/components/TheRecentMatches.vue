@@ -6,11 +6,10 @@ import { IMatchResult } from '../interfaces/matchResult.interface';
 import GameResult from './MatchResult.vue';
 import TheGraphStat from './TheGraphStat.vue';
 
-const STRATZ_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJodHRwczovL3N0ZWFtY29tbXVuaXR5LmNvbS9vcGVuaWQvaWQvNzY1NjExOTg5NzAwMzQ4MzYiLCJ1bmlxdWVfbmFtZSI6IijguIfvuKEnLSfvuKAp4LiHIiwiU3ViamVjdCI6IjNiYTJjNjJjLTM5ZWYtNDk2My1hYTczLWQ1NzE3MjE0YjE2MCIsIlN0ZWFtSWQiOiIxMDA5NzY5MTA4IiwibmJmIjoxNjYyNzM1MDMyLCJleHAiOjE2OTQyNzEwMzIsImlhdCI6MTY2MjczNTAzMiwiaXNzIjoiaHR0cHM6Ly9hcGkuc3RyYXR6LmNvbSJ9.gnpKWEr-ONCT3wHO3NdwyzzR0bC-hR7-rBoTk915sBw'
 const baseURL = 'https://api.stratz.com'
 const playerId = '1009769108'
 const axiosConfig = {
-  headers: { Authorization: `Bearer ${STRATZ_TOKEN}` }
+  headers: { Authorization: `Bearer ${import.meta.env.VITE_STRATZ_TOKEN}` }
 }
 
 const lastMatches = ref<IMatchResult[]>([])

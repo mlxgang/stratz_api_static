@@ -1,7 +1,5 @@
 <script lang="ts" setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
+interface IMatchResult {
   KDA: String,
   networth: Number,
   level: Number,
@@ -9,9 +7,11 @@ const props = defineProps({
   damage: Number,
   towerDamage: Number,
   IMP: Number
-})
+}
 
-function IMPcolor(IMP: Number) {
+const props = defineProps<IMatchResult>()
+
+function getIMPСolor(IMP: Number) {
   if ( IMP > 0 ) {
     return { color: 'green' }
   } else {
@@ -29,7 +29,7 @@ function IMPcolor(IMP: Number) {
       <li>Золота в минуту: {{ props.GPM.toLocaleString('ru') }}</li>
       <li>Урон: {{ props.damage.toLocaleString('ru') }}</li>
       <li>Урон по постройкам: {{ props.towerDamage.toLocaleString('ru') }}</li>
-      <li :style="IMPcolor(props.IMP)">Уровень исполнения: {{ props.IMP }}</li>
+      <li :style="getIMPСolor(props.IMP)">Уровень исполнения: {{ props.IMP }}</li>
     </ul>
   </div>
 </template>
