@@ -1,5 +1,11 @@
 <script lang="ts" setup>
+// import { getHeroName } from '../utils/getHeroName';
+import * as test from '../assets/heroes';
+import { IHero } from '../interfaces/hero.interface';
+import { onMounted } from 'vue';
+
 interface IMatchResult {
+  heroID: Number,
   KDA: String,
   networth: Number,
   level: Number,
@@ -18,11 +24,20 @@ function getIMPСolor(IMP: Number) {
     return { color: 'red' }
   }
 }
+
+// function getHeroName(id: Number) {
+//   heroes.heroes.find((hero: IHero) => {
+//     return hero.id === id
+//   })
+// }
+
+
 </script>
 
 <template>
   <div>
     <ul>
+      <li>Герой: {{ props.heroID }}</li>
       <li>K/D/A: {{ props.KDA }}</li>
       <li>Общая ценность: {{ props.networth.toLocaleString('ru') }}</li>
       <li>Уровень: {{ props.level }}</li>

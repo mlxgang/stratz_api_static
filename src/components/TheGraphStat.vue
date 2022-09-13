@@ -1,8 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import VueApexCharts from 'vue3-apexcharts'
-import { onMounted, PropType } from 'vue';
+import { ref, watch } from 'vue';
+import { getHeroName } from '../utils/getHeroName';
 
 interface IMatchResult {
+  heroID: Number,
   KDA: String,
   networth: Number,
   level: Number,
@@ -14,37 +16,40 @@ interface IMatchResult {
 
 const props = defineProps({
   lastMatches: {
-    type: Array as PropType<Array<IMatchResult>>
+    type: Array<Object>
   }
 })
 
-const chartOptions = {
+// watch(props, (newLastMatches) => {
+//   const test: IMatchResult[] = newLastMatches.lastMatches
+//   data.value = []
+//   for ( let i = 0; i < 9; i++ ) {
+//     categories.value.push(getHeroName(test[i].heroID))
+//     data.value.push(test[i].IMP)
+//   }
+// })
+
+const categories = ref<Object[]>([])
+
+const data = ref<Number[]>([])
+
+const chartOptions = ref({
   chart: {
     id: 'basic-bar'
   },
   xaxis: {
-    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+    categories
   }
-}
+})
 const series = [{
   name: 'series-1',
-  data: [30, 40, 45, 50, 49, 60, 70, 91]
+  data: data
 }]
-// for (let i in props.lastMatches.length) {
-//   console.log(props.lastMatches[i].KDA)
-// }
-//
-// console.log(props.lastMatches)
-
-onMounted(() => {
-  console.log(props.lastMatches[0])
-  // todo: watch for props
-})
 
 </script>
 
 <template>
-  <VueApexCharts width="500" type="line" :options="chartOptions" :series="series"/>
+  <VueApexCharts :options="chartOptions" :series="series" type="bar" width="500"/>
 </template>
 
 <style scoped>

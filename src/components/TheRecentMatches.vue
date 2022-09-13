@@ -5,6 +5,7 @@ import { IMatch } from '../interfaces/match.interface';
 import { IMatchResult } from '../interfaces/matchResult.interface';
 import GameResult from './MatchResult.vue';
 import TheGraphStat from './TheGraphStat.vue';
+import heroes from '../assets/heroes';
 
 const baseURL = 'https://api.stratz.com'
 const playerId = '1009769108'
@@ -20,6 +21,7 @@ onMounted(async () => {
   for ( let i in response.data ) {
     let testLastMatch: IMatch = response.data[i].players[0] // todo: rename test
     let testMatchResult: IMatchResult = {
+      heroID: testLastMatch.heroId,
       KDA: `${testLastMatch.numKills}/${testLastMatch.numDeaths}/${testLastMatch.numAssists}`,
       networth: testLastMatch.networth,
       level: testLastMatch.level,
@@ -31,6 +33,10 @@ onMounted(async () => {
     lastMatches.value.push(testMatchResult)
   }
 })
+
+onMounted(()=> {
+  console.log(heroes)
+})
 </script>
 
 <template>
@@ -40,6 +46,7 @@ onMounted(async () => {
     <GameResult
         v-for="(matchResult, index) in lastMatches"
         :key="index"
+        :heroID="matchResult.heroID"
         :GPM="matchResult.GPM"
         :IMP="matchResult.IMP"
         :KDA="matchResult.KDA"
