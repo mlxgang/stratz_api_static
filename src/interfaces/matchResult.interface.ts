@@ -1,10 +1,11 @@
 export interface IMatchResult {
-    heroID: Number,
-    KDA: String,
-    networth: Number,
-    level: Number,
-    GPM: Number,
-    damage: Number,
-    towerDamage: Number,
-    IMP: Number
+    heroId: number,
+    KDA: string,
+    networth: number,
+    level: number,
+    GPM: number,
+    damage: number,
+    towerDamage: number,
+    IMP: number,
+    items: number[]
 }

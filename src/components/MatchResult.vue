@@ -1,53 +1,52 @@
 <script lang="ts" setup>
-// import { getHeroName } from '../utils/getHeroName';
-import * as test from '../assets/heroes';
-import { IHero } from '../interfaces/hero.interface';
-import { onMounted } from 'vue';
+import { getHeroName } from '../utils/getHeroName';
+import { getHeroLocaleName } from '../utils/getHeroLocaleName';
+import { getItemName } from '../utils/getItemName'
+import ItemIcon from './ItemIcon.vue';
 
 interface IMatchResult {
-  heroID: Number,
-  KDA: String,
-  networth: Number,
-  level: Number,
-  GPM: Number,
-  damage: Number,
-  towerDamage: Number,
-  IMP: Number
+  heroId: number,
+  KDA: string,
+  networth: number,
+  level: number,
+  GPM: number,
+  damage: number,
+  towerDamage: number,
+  IMP: number,
+  items: number[]
 }
 
 const props = defineProps<IMatchResult>()
 
-function getIMPСolor(IMP: Number) {
-  if ( IMP > 0 ) {
+function getIMPColor(IMP: number) {
+  if (IMP > 0) {
     return { color: 'green' }
   } else {
     return { color: 'red' }
   }
 }
-
-// function getHeroName(id: Number) {
-//   heroes.heroes.find((hero: IHero) => {
-//     return hero.id === id
-//   })
-// }
-
-
 </script>
 
 <template>
-  <div>
-    <ul>
-      <li>Герой: {{ props.heroID }}</li>
-      <li>K/D/A: {{ props.KDA }}</li>
-      <li>Общая ценность: {{ props.networth.toLocaleString('ru') }}</li>
-      <li>Уровень: {{ props.level }}</li>
-      <li>Золота в минуту: {{ props.GPM.toLocaleString('ru') }}</li>
-      <li>Урон: {{ props.damage.toLocaleString('ru') }}</li>
-      <li>Урон по постройкам: {{ props.towerDamage.toLocaleString('ru') }}</li>
-      <li :style="getIMPСolor(props.IMP)">Уровень исполнения: {{ props.IMP }}</li>
-    </ul>
-  </div>
+  <tr class="match">
+    <td><img
+        :src="`https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${getHeroName(props.heroId)}.png`"
+        :alt="getHeroLocaleName(props.heroId)" class="hero-image" /></td>
+    <td><span>{{ getHeroLocaleName(props.heroId) }}</span></td>
+    <td><span>{{ props.level }}</span></td>
+    <td><span>{{ props.KDA }}</span></td>
+    <td>
+      <!-- <ItemIcon v-for="(id, index) in props.items" :key="index" :id=id /> -->
+    </td>
+  </tr>
 </template>
 
 <style scoped>
+.match {
+  height: 56px;
+}
+
+.hero-image {
+  height: 40px;
+}
 </style>

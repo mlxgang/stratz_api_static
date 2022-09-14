@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import VueApexCharts from 'vue3-apexcharts'
 import { ref, watch } from 'vue';
-import { getHeroName } from '../utils/getHeroName';
+import { getHeroLocaleName } from '../utils/getHeroLocaleName';
 
 interface IMatchResult {
-  heroID: Number,
+  heroId: Number,
   KDA: String,
   networth: Number,
   level: Number,
@@ -20,14 +20,13 @@ const props = defineProps({
   }
 })
 
-// watch(props, (newLastMatches) => {
-//   const test: IMatchResult[] = newLastMatches.lastMatches
-//   data.value = []
-//   for ( let i = 0; i < 9; i++ ) {
-//     categories.value.push(getHeroName(test[i].heroID))
-//     data.value.push(test[i].IMP)
-//   }
-// })
+watch(props, (newLastMatches) => {
+  const test: IMatchResult[] = newLastMatches.lastMatches // todo: solve issue
+  for ( let i = 0; i < 9; i++ ) {
+    categories.value.push(getHeroLocaleName(test[i].heroId))
+    data.value.push(test[i].IMP)
+  }
+})
 
 const categories = ref<Object[]>([])
 
@@ -49,7 +48,7 @@ const series = [{
 </script>
 
 <template>
-  <VueApexCharts :options="chartOptions" :series="series" type="bar" width="500"/>
+  <VueApexCharts :options="chartOptions" :series="series" type="bar" width="700"/>
 </template>
 
 <style scoped>
