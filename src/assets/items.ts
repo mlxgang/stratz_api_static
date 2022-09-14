@@ -1074,5 +1074,33 @@ export default [
     {
         'id': 267,
         'name': 'spirit_vessel'
-    }
+    },
+    {
+        'id': 273,
+        'name': 'kaya_and_sange'
+    },
+    {
+        'id': 534,
+        'name': 'witch_blade'
+    },
+    {
+        'id': 908,
+        'name': 'wraith_pact'
+    },
+    {
+        'id': 931,
+        'name': 'boots_of_bearing'
+    },
+    {
+        'id': 692,
+        'name': 'eternal_shroud'
+    },
+    {
+        'id': 596,
+        'name': 'falcon_blade'
+    },
+    {
+        'id': 600,
+        'name': 'overwhelming_blink'
+    },
 ]

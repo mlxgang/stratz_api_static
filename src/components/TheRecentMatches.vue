@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
-import axios from 'axios';
-import { IMatchResult } from '../interfaces/matchResult.interface';
-import GameResult from './MatchResult.vue';
-import TheGraphStat from './TheGraphStat.vue';
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import { IMatchResult } from "../interfaces/matchResult.interface";
+import MatchResult from "./MatchResult.vue";
+import TheGraphStat from '../components/TheGraphStat.vue'
 
-const baseURL = 'https://api.stratz.com'
-const playerId = '1009769108'
-const player1Id = '1187184697'
+const baseURL = "https://api.stratz.com";
+const playerId = "1009769108";
+const player1Id = "1187184697";
 const axiosConfig = {
-  headers: { Authorization: `Bearer ${import.meta.env.VITE_STRATZ_TOKEN}` }
-}
+  headers: { Authorization: `Bearer ${import.meta.env.VITE_STRATZ_TOKEN}` },
+};
 
 const lastMatch = ref<IMatchResult>({
   heroId: 1,
@@ -21,17 +21,23 @@ const lastMatch = ref<IMatchResult>({
   damage: 0,
   towerDamage: 0,
   IMP: 0,
-  items: [
-    0, 0, 0, 0, 0, 0
-  ]
-})
-const lastMatches = ref<IMatchResult[]>([])
+  item0Id: 1,
+  item1Id: 1,
+  item2Id: 1,
+  item3Id: 1,
+  item4Id: 1,
+  item5Id: 1,
+});
+const lastMatches = ref<IMatchResult[]>([]);
 
 onMounted(async () => {
-  const { data } = await axios.get(`${baseURL}/api/v1/Player/${player1Id}/matches`, axiosConfig)
+  const { data } = await axios.get(
+    `${baseURL}/api/v1/Player/${playerId}/matches`,
+    axiosConfig
+  );
 
-  for ( let i in data ) {
-    let response = data[i].players[0] // todo: rename test
+  for (let i in data) {
+    let response = data[i].players[0]; // todo: rename test
     lastMatches.value.push({
       heroId: response.heroId,
       KDA: `${response.numKills}/${response.numDeaths}/${response.numAssists}`,
@@ -41,47 +47,58 @@ onMounted(async () => {
       damage: response.heroDamage,
       towerDamage: response.towerDamage,
       IMP: response.imp,
-      items: [
-       response.item0Id,
-       response.item1Id,
-       response.item2Id,
-       response.item3Id,
-       response.item4Id,
-       response.item5Id,
-      ]
-    })
+      item0Id: response.item0Id,
+      item1Id: response.item1Id,
+      item2Id: response.item2Id,
+      item3Id: response.item3Id,
+      item4Id: response.item4Id,
+      item5Id: response.item5Id,
+    });
   }
-  lastMatch.value = lastMatches.value[0]
-})
+  lastMatch.value = lastMatches.value[0];
+});
 </script>
 
 <template>
   <h1>mlxgang dota stats</h1>
-  <table>
-    
-  </table>
-  <TheGraphStat :lastMatches="lastMatches"/>
-  <div class="grid">
-    <GameResult
-        v-for="(matchResult, index) in lastMatches"
+  <TheGraphStat :lastMatches="lastMatches" />
+  <div class="matches">
+    <div class="grid">
+      <div></div>
+      <span>Уровень исполнения</span>
+      <span>Герой</span>
+      <span>Уровень</span>
+      <span>K/D/A</span>
+      <span>Предметы</span>
+    </div>
+    <MatchResult
+        v-for="(match, index) in lastMatches"
         :key="index"
-        :heroId="matchResult.heroId"
-        :GPM="matchResult.GPM"
-        :IMP="matchResult.IMP"
-        :KDA="matchResult.KDA"
-        :damage="matchResult.damage"
-        :level="matchResult.level"
-        :networth="matchResult.networth"
-        :towerDamage="matchResult.towerDamage"
-        :items="matchResult.items"
+        :heroId="match.heroId"
+        :GPM="match.GPM"
+        :IMP="match.IMP"
+        :KDA="match.KDA"
+        :damage="match.damage"
+        :level="match.level"
+        :networth="match.networth"
+        :towerDamage="match.towerDamage"
+        :item0Id="match.item0Id"
+        :item1Id="match.item1Id"
+        :item2Id="match.item2Id"
+        :item3Id="match.item3Id"
+        :item4Id="match.item4Id"
+        :item5Id="match.item5Id"
     />
   </div>
-
 </template>
 
 <style scoped>
-.grid {
+.matches {
   display: flex;
-  flex-direction: column;
+  flex-direction: column
+}
+.grid {
+  display: grid;
+  grid-template-columns: 101px 33px auto 48px 100px 114px;
 }
 </style>

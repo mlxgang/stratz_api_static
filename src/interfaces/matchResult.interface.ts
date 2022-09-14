@@ -7,5 +7,10 @@ export interface IMatchResult {
     damage: number,
     towerDamage: number,
     IMP: number,
-    items: number[]
+    item0Id: number;
+    item1Id: number;
+    item2Id: number;
+    item3Id: number;
+    item4Id: number;
+    item5Id: number;
 }

@@ -1,52 +1,90 @@
 <script lang="ts" setup>
-import { getHeroName } from '../utils/getHeroName';
-import { getHeroLocaleName } from '../utils/getHeroLocaleName';
-import { getItemName } from '../utils/getItemName'
-import ItemIcon from './ItemIcon.vue';
+import { getHeroName } from '../utils/getHeroName'
+import { getHeroLocaleName } from '../utils/getHeroLocaleName'
+import ItemImage from './ItemImage.vue';
 
 interface IMatchResult {
-  heroId: number,
-  KDA: string,
-  networth: number,
-  level: number,
-  GPM: number,
-  damage: number,
-  towerDamage: number,
-  IMP: number,
-  items: number[]
+  heroId: number;
+  KDA: string;
+  networth: number;
+  level: number;
+  GPM: number;
+  damage: number;
+  towerDamage: number;
+  IMP: number;
+  item0Id?: number;
+  item1Id?: number;
+  item2Id?: number;
+  item3Id?: number;
+  item4Id?: number;
+  item5Id?: number;
 }
 
-const props = defineProps<IMatchResult>()
+const imageURL = 'https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/'
+
+const props = defineProps<IMatchResult>();
 
 function getIMPColor(IMP: number) {
-  if (IMP > 0) {
-    return { color: 'green' }
+  if ( IMP > 0 ) {
+    return { color: 'green' };
   } else {
-    return { color: 'red' }
+    return { color: 'red' };
   }
 }
 </script>
 
 <template>
   <tr class="match">
-    <td><img
-        :src="`https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${getHeroName(props.heroId)}.png`"
-        :alt="getHeroLocaleName(props.heroId)" class="hero-image" /></td>
-    <td><span>{{ getHeroLocaleName(props.heroId) }}</span></td>
-    <td><span>{{ props.level }}</span></td>
-    <td><span>{{ props.KDA }}</span></td>
     <td>
-      <!-- <ItemIcon v-for="(id, index) in props.items" :key="index" :id=id /> -->
+      <img :alt="getHeroLocaleName(props.heroId)"
+           :src="`${imageURL}/heroes/${getHeroName(props.heroId)}.png`"
+           class="hero-image"/>
+    </td>
+    <td>
+      <span :style="getIMPColor(props.IMP)">{{ props.IMP }}</span>
+    </td>
+    <td>
+      <span>{{ getHeroLocaleName(props.heroId) }}</span>
+    </td>
+    <td>
+      <span>{{ props.level }}</span>
+    </td>
+    <td>
+      <span>{{ props.KDA }}</span>
+    </td>
+    <td>
+      <div class="items">
+        <ItemImage :item="props.item0Id"/>
+        <ItemImage :item="props.item1Id"/>
+        <ItemImage :item="props.item2Id"/>
+        <ItemImage :item="props.item3Id"/>
+        <ItemImage :item="props.item4Id"/>
+        <ItemImage :item="props.item5Id"/>
+      </div>
     </td>
   </tr>
 </template>
 
 <style scoped>
 .match {
+  display: grid;
+  grid-template-columns: 101px 33px auto 48px 100px 114px;
+
   height: 56px;
+  align-items: center;
+  border: 1px solid aliceblue;
 }
 
 .hero-image {
   height: 40px;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: 28px 28px 28px;
+}
+
+td {
+  margin: 0 15px;
 }
 </style>
