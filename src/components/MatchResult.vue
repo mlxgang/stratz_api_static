@@ -4,6 +4,7 @@ import { getHeroLocaleName } from '../utils/getHeroLocaleName'
 import ItemImage from './ItemImage.vue';
 
 interface IMatchResult {
+  matchId: number,
   heroId: number;
   KDA: string;
   networth: number;
@@ -34,35 +35,37 @@ function getIMPColor(IMP: number) {
 </script>
 
 <template>
-  <tr class="match">
-    <td>
-      <img :alt="getHeroLocaleName(props.heroId)"
-           :src="`${imageURL}/heroes/${getHeroName(props.heroId)}.png`"
-           class="hero-image"/>
-    </td>
-    <td>
-      <span :style="getIMPColor(props.IMP)">{{ props.IMP }}</span>
-    </td>
-    <td>
-      <span>{{ getHeroLocaleName(props.heroId) }}</span>
-    </td>
-    <td>
-      <span>{{ props.level }}</span>
-    </td>
-    <td>
-      <span>{{ props.KDA }}</span>
-    </td>
-    <td>
-      <div class="items">
-        <ItemImage :item="props.item0Id"/>
-        <ItemImage :item="props.item1Id"/>
-        <ItemImage :item="props.item2Id"/>
-        <ItemImage :item="props.item3Id"/>
-        <ItemImage :item="props.item4Id"/>
-        <ItemImage :item="props.item5Id"/>
-      </div>
-    </td>
-  </tr>
+  <router-link :to="`/match/${props.matchId}`">
+    <tr class="match">
+      <td>
+        <img :alt="getHeroLocaleName(props.heroId)"
+             :src="`${imageURL}/heroes/${getHeroName(props.heroId)}.png`"
+             class="hero-image"/>
+      </td>
+      <td>
+        <span :style="getIMPColor(props.IMP)">{{ props.IMP }}</span>
+      </td>
+      <td>
+        <span>{{ getHeroLocaleName(props.heroId) }}</span>
+      </td>
+      <td>
+        <span>{{ props.level }}</span>
+      </td>
+      <td>
+        <span>{{ props.KDA }}</span>
+      </td>
+      <td>
+        <div class="items">
+          <ItemImage :item="props.item0Id"/>
+          <ItemImage :item="props.item1Id"/>
+          <ItemImage :item="props.item2Id"/>
+          <ItemImage :item="props.item3Id"/>
+          <ItemImage :item="props.item4Id"/>
+          <ItemImage :item="props.item5Id"/>
+        </div>
+      </td>
+    </tr>
+  </router-link>
 </template>
 
 <style scoped>

@@ -1,4 +1,5 @@
 export interface IMatchResult {
+    matchId: number,
     heroId: number,
     KDA: string,
     networth: number,

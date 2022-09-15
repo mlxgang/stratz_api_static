@@ -13,6 +13,7 @@ const axiosConfig = {
 };
 
 const lastMatch = ref<IMatchResult>({
+  matchId: 0,
   heroId: 1,
   KDA: `0/0/0`,
   networth: 0,
@@ -32,13 +33,14 @@ const lastMatches = ref<IMatchResult[]>([]);
 
 onMounted(async () => {
   const { data } = await axios.get(
-    `${baseURL}/api/v1/Player/${playerId}/matches`,
+    `${baseURL}/api/v1/Player/${player1Id}/matches`,
     axiosConfig
   );
 
   for (let i in data) {
-    let response = data[i].players[0]; // todo: rename test
+    let response = data[i].players[0]; // todo: refactor to function
     lastMatches.value.push({
+      matchId: response.matchId,
       heroId: response.heroId,
       KDA: `${response.numKills}/${response.numDeaths}/${response.numAssists}`,
       networth: response.networth,
@@ -74,6 +76,7 @@ onMounted(async () => {
     <MatchResult
         v-for="(match, index) in lastMatches"
         :key="index"
+        :matchId="match.matchId"
         :heroId="match.heroId"
         :GPM="match.GPM"
         :IMP="match.IMP"
